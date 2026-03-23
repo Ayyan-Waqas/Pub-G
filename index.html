@@ -1,0 +1,3829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUBG - Battle Royale | Drop. Loot. Survive.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Teko:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+    /* ============================================
+   PUBG GAMING WEBSITE - PROFESSIONAL STYLES
+   ============================================ */
+
+/* ============================================
+   1. CSS VARIABLES & RESET
+   ============================================ */
+
+:root {
+    /* Primary Colors */
+    --primary: #F7931E;
+    --primary-dark: #d97706;
+    --primary-light: #fbbf24;
+    --primary-glow: rgba(247, 147, 30, 0.5);
+    
+    /* Secondary Colors */
+    --military-green: #4A5D23;
+    --olive: #6B7B3A;
+    --army-dark: #2d3a14;
+    
+    /* Background Colors */
+    --bg-dark: #0a0a0a;
+    --bg-darker: #050505;
+    --bg-card: #111111;
+    --bg-card-hover: #1a1a1a;
+    --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    
+    /* Text Colors */
+    --text-white: #ffffff;
+    --text-light: #e5e5e5;
+    --text-gray: #a3a3a3;
+    --text-dark: #525252;
+    
+    /* Accent Colors */
+    --red: #ef4444;
+    --green: #22c55e;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+    --cyan: #06b6d4;
+    --yellow: #eab308;
+    
+    /* Rarity Colors */
+    --rarity-common: #737373;
+    --rarity-rare: #3b82f6;
+    --rarity-epic: #a855f7;
+    --rarity-legendary: #f7931e;
+    --rarity-mythic: #ef4444;
+    
+    /* Typography */
+    --font-heading: 'Teko', sans-serif;
+    --font-accent: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    
+    /* Spacing */
+    --section-padding: 100px;
+    --container-width: 1400px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    --transition-bounce: 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px var(--primary-glow);
+    
+    /* Z-Index */
+    --z-navbar: 1000;
+    --z-modal: 2000;
+    --z-cursor: 3000;
+}
+
+/* Reset */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
+    cursor: none;
+}
+
+body.loading {
+    overflow: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+::selection {
+    background: var(--primary);
+    color: var(--bg-dark);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: none;
+    border: none;
+    background: none;
+}
+
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================
+   2. PRELOADER
+   ============================================ */
+
+.preloader {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-darker);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-logo {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.logo-letter {
+    font-family: var(--font-accent);
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--primary);
+    animation: letterBounce 0.6s ease infinite;
+    text-shadow: 0 0 30px var(--primary-glow);
+}
+
+.logo-letter:nth-child(1) { animation-delay: 0s; }
+.logo-letter:nth-child(2) { animation-delay: 0.1s; }
+.logo-letter:nth-child(3) { animation-delay: 0.2s; }
+.logo-letter:nth-child(4) { animation-delay: 0.3s; }
+
+@keyframes letterBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.loader-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    margin: 0 auto 20px;
+}
+
+.loader-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    border-radius: 2px;
+    animation: loadProgress 2s ease forwards;
+}
+
+@keyframes loadProgress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+.loader-text {
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    color: var(--text-gray);
+    letter-spacing: 3px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ============================================
+   3. CUSTOM CURSOR
+   ============================================ */
+
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, opacity 0.3s ease;
+}
+
+.cursor-outline {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: var(--z-cursor);
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+}
+
+.cursor-outline.hover {
+    width: 60px;
+    height: 60px;
+    border-color: var(--primary-light);
+}
+
+.cursor-outline.clicking {
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* ============================================
+   4. NAVIGATION
+   ============================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-navbar);
+    padding: 15px 0;
+    transition: all var(--transition);
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent);
+    opacity: 1;
+    transition: opacity var(--transition);
+}
+
+.navbar.scrolled::before {
+    opacity: 1;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(20px);
+}
+
+.nav-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+/* Logo */
+.nav-logo {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.logo-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--bg-dark);
+    position: relative;
+      overflow: hidden;
+}
+
+
+.logo-icon::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: rotate(45deg);
+    animation: logoShine 3s infinite;
+}
+
+@keyframes logoShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.logo-glitch {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.logo-glitch::before,
+.logo-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0.8;
+}
+
+.logo-glitch::before {
+    color: var(--cyan);
+    animation: glitch1 2s infinite;
+}
+
+.logo-glitch::after {
+    color: var(--red);
+    animation: glitch2 2s infinite;
+}
+
+@keyframes glitch1 {
+    0%, 100% { clip-path: inset(0 0 90% 0); transform: translateX(-2px); }
+    20% { clip-path: inset(30% 0 50% 0); transform: translateX(2px); }
+    40% { clip-path: inset(60% 0 20% 0); transform: translateX(-2px); }
+}
+
+@keyframes glitch2 {
+    0%, 100% { clip-path: inset(80% 0 0 0); transform: translateX(2px); }
+    20% { clip-path: inset(10% 0 70% 0); transform: translateX(-2px); }
+    40% { clip-path: inset(40% 0 40% 0); transform: translateX(2px); }
+}
+
+/* Nav Menu */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-link {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    position: relative;
+    padding: 10px 0;
+    transition: color var(--transition);
+}
+
+.nav-link span {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-link span::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path var(--transition);
+}
+
+.nav-link:hover span::after,
+.nav-link.active span::after {
+    clip-path: inset(0 0 0 0);
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width var(--transition);
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+    width: 100%;
+}
+
+/* Play Button */
+.btn-play {
+    position: relative;
+    padding: 12px 30px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.btn-play-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    transition: transform var(--transition);
+}
+
+.btn-play:hover .btn-play-bg {
+    transform: scale(1.1);
+}
+
+.btn-play-text {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-accent);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--bg-dark);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Mobile Toggle */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 10;
+    padding: 5px;
+}
+
+.nav-toggle span {
+    width: 30px;
+    height: 3px;
+    background: var(--text-white);
+    border-radius: 2px;
+    transition: all var(--transition);
+    transform-origin: center;
+}
+
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* ============================================
+   5. HERO SECTION
+   ============================================ */
+
+.hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Hero Background */
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1920') center/cover no-repeat;
+}
+
+.hero-video-overlay {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 30% 70%, rgba(74, 93, 35, 0.3) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 30%, rgba(247, 147, 30, 0.2) 0%, transparent 40%),
+        linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.9) 100%);
+}
+
+.hero-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+}
+
+/* Hero Particles */
+.hero-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+    animation: particleFloat 15s infinite;
+}
+
+@keyframes particleFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(100vh) scale(0);
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(1);
+    }
+}
+
+/* Smoke Effects */
+.smoke-effect {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.3;
+    animation: smokeFloat 20s ease-in-out infinite;
+}
+
+.smoke-1 {
+    background: var(--military-green);
+    top: 20%;
+    left: -10%;
+    animation-delay: 0s;
+}
+
+.smoke-2 {
+    background: var(--primary);
+    bottom: 20%;
+    right: -10%;
+    animation-delay: -7s;
+}
+
+.smoke-3 {
+    background: var(--olive);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -14s;
+}
+
+@keyframes smokeFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    25% { transform: translate(50px, -30px) scale(1.1); }
+    50% { transform: translate(-30px, 50px) scale(0.9); }
+    75% { transform: translate(30px, 30px) scale(1.05); }
+}
+
+/* Hero Lines */
+.hero-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.h-line {
+    position: absolute;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.3;
+}
+
+.h-line-1 {
+    top: 30%;
+    left: 0;
+    right: 0;
+    animation: lineGlow 4s ease-in-out infinite;
+}
+
+.h-line-2 {
+    top: 70%;
+    left: 0;
+    right: 0;
+    animation: lineGlow 4s ease-in-out infinite 2s;
+}
+
+.v-line {
+    position: absolute;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--primary), transparent);
+    opacity: 0.3;
+}
+
+.v-line-1 {
+    left: 20%;
+    top: 0;
+    bottom: 0;
+    animation: lineGlow 4s ease-in-out infinite 1s;
+}
+
+.v-line-2 {
+    right: 20%;
+    top: 0;
+    bottom: 0;
+    animation: lineGlow 4s ease-in-out infinite 3s;
+}
+
+@keyframes lineGlow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.5; }
+}
+
+/* Corner Decorations */
+.corner-decor {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    color: var(--primary);
+    opacity: 0.5;
+}
+
+.corner-decor.top-left { top: 20px; left: 20px; }
+.corner-decor.top-right { top: 20px; right: 20px; }
+.corner-decor.bottom-left { bottom: 20px; left: 20px; }
+.corner-decor.bottom-right { bottom: 20px; right: 20px; }
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 0 20px;
+    max-width: 1000px;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(247, 147, 30, 0.1);
+    border: 1px solid rgba(247, 147, 30, 0.3);
+    padding: 10px 25px;
+    border-radius: 50px;
+    margin-bottom: 30px;
+    font-family: var(--font-accent);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--primary);
+}
+
+.badge-pulse {
+    width: 10px;
+    height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    50% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: 5px;
+    margin-bottom: 30px;
+}
+
+.title-line {
+    display: block;
+    overflow: hidden;
+}
+
+.title-line.highlight {
+    color: var(--primary);
+    text-shadow: 0 0 50px var(--primary-glow);
+}
+
+.char-animate {
+    display: inline-block;
+    animation: charReveal 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+@keyframes charReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+}
+
+/* Hero Buttons */
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+}
+
+.btn {
+    position: relative;
+    padding: 18px 40px;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform var(--transition);
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}
+
+.btn-primary {
+    background: transparent;
+}
+
+.btn-primary .btn-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    transition: transform var(--transition);
+}
+
+.btn-primary:hover .btn-bg {
+    transform: scale(1.05);
+}
+
+.btn-primary .btn-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--bg-dark);
+}
+
+.btn-glare {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn-primary:hover .btn-glare {
+    left: 100%;
+}
+
+.btn-secondary {
+    background: transparent;
+}
+
+.btn-secondary .btn-border {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: border-color var(--transition), background var(--transition);
+}
+
+.btn-secondary:hover .btn-border {
+    border-color: var(--primary);
+    background: rgba(247, 147, 30, 0.1);
+}
+
+.btn-secondary .btn-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-white);
+}
+
+/* Hero Stats */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background: rgba(247, 147, 30, 0.1);
+    border: 1px solid rgba(247, 147, 30, 0.3);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.stat-info {
+    text-align: left;
+}
+
+.stat-number {
+    font-family: var(--font-accent);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-white);
+}
+
+.stat-suffix {
+    font-family: var(--font-accent);
+    font-size: 1.2rem;
+    color: var(--primary);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stat-divider {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(180deg, transparent, var(--primary), transparent);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    animation: floatUpDown 2s ease-in-out infinite;
+}
+
+@keyframes floatUpDown {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+.mouse {
+    width: 26px;
+    height: 40px;
+    border: 2px solid var(--primary);
+    border-radius: 15px;
+    position: relative;
+}
+
+.wheel {
+    width: 4px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 2px;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: scrollWheel 1.5s infinite;
+}
+
+@keyframes scrollWheel {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(15px); }
+}
+
+.scroll-indicator span {
+    font-family: var(--font-accent);
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    letter-spacing: 2px;
+}
+
+.scroll-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.scroll-arrows span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
+    transform: rotate(45deg);
+    animation: scrollArrow 1.5s infinite;
+}
+
+.scroll-arrows span:nth-child(2) { animation-delay: 0.2s; }
+.scroll-arrows span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes scrollArrow {
+    0% { opacity: 0; transform: rotate(45deg) translate(-5px, -5px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: rotate(45deg) translate(5px, 5px); }
+}
+
+/* Hero Side Elements */
+.hero-side-left {
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hero-side-left span {
+    font-family: var(--font-accent);
+    font-size: 0.7rem;
+    color: var(--text-gray);
+    letter-spacing: 3px;
+}
+
+.side-line {
+    width: 50px;
+    height: 1px;
+    background: var(--primary);
+}
+
+.hero-side-right {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.hero-side-right .social-links {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hero-side-right .social-links a {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    font-size: 1rem;
+    transition: all var(--transition);
+}
+
+.hero-side-right .social-links a:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg-dark);
+    transform: scale(1.1);
+}
+
+/* ============================================
+   6. SECTION STYLES
+   ============================================ */
+
+.section {
+    padding: var(--section-padding) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.section-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+}
+
+.bg-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--bg-darker) 0%, var(--bg-dark) 50%, var(--bg-darker) 100%);
+}
+
+.bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Section Header */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-accent);
+    font-size: 0.75rem;
+    color: var(--primary);
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+.section-tag i {
+    font-size: 0.9rem;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.section-title .highlight {
+    color: var(--primary);
+    text-shadow: 0 0 30px var(--primary-glow);
+}
+
+.title-decoration {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.title-decoration.right {
+    background: linear-gradient(90deg, transparent, var(--primary));
+}
+
+.section-desc {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   7. MAPS SECTION
+   ============================================ */
+
+.maps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.map-card {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all var(--transition);
+}
+
+.map-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 40px rgba(247, 147, 30, 0.2);
+}
+
+.map-card.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.map-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.map-card.featured .map-image {
+    height: 100%;
+}
+
+.map-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.map-card:hover .map-image img {
+    transform: scale(1.1);
+}
+
+.map-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+.map-scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--primary);
+    opacity: 0;
+    transition: opacity var(--transition);
+    animation: scanLine 2s linear infinite;
+}
+
+.map-card:hover .map-scan-line {
+    opacity: 0.7;
+}
+
+@keyframes scanLine {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+.map-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 25px;
+}
+
+.map-card.featured .map-content {
+    padding: 40px;
+}
+
+.map-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: var(--military-green);
+    color: var(--text-white);
+    font-family: var(--font-accent);
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.map-badge.desert { background: var(--yellow); color: var(--bg-dark); }
+.map-badge.jungle { background: var(--green); color: var(--bg-dark); }
+.map-badge.snow { background: var(--cyan); color: var(--bg-dark); }
+.map-badge.new { background: var(--red); }
+
+.map-name {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.map-card.featured .map-name {
+    font-size: 3rem;
+}
+
+.map-specs {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.map-specs i {
+    color: var(--primary);
+    margin-right: 5px;
+}
+
+.map-desc {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    display: none;
+}
+
+.map-card.featured .map-desc {
+    display: block;
+}
+
+.map-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.map-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-stat .stat-name {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    width: 80px;
+}
+
+.map-stat .stat-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.map-stat .stat-fill {
+    height: 100%;
+    width: var(--width);
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.map-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary);
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: gap var(--transition);
+}
+
+.map-btn:hover {
+    gap: 20px;
+}
+
+.map-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    box-shadow: inset 0 0 50px rgba(247, 147, 30, 0);
+    transition: box-shadow var(--transition);
+    pointer-events: none;
+}
+
+.map-card:hover .map-glow {
+    box-shadow: inset 0 0 50px rgba(247, 147, 30, 0.1);
+}
+
+/* ============================================
+   8. ARSENAL / WEAPONS SECTION
+   ============================================ */
+
+.arsenal-section {
+    background: var(--bg-darker);
+}
+
+.weapon-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.weapon-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-gray);
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    transition: all var(--transition);
+}
+
+.weapon-tab:hover,
+.weapon-tab.active {
+    background: rgba(247, 147, 30, 0.1);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.weapons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+}
+
+.weapon-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(20, 20, 20, 0.9));
+    border-radius: 12px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    transition: all var(--transition);
+}
+
+.weapon-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glow);
+}
+
+.weapon-rarity {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.weapon-rarity.legendary { background: linear-gradient(90deg, var(--rarity-legendary), transparent); }
+.weapon-rarity.mythic { background: linear-gradient(90deg, var(--rarity-mythic), var(--primary), var(--rarity-mythic)); animation: mythicGlow 2s infinite; }
+.weapon-rarity.epic { background: linear-gradient(90deg, var(--rarity-epic), transparent); }
+
+@keyframes mythicGlow {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+.weapon-image {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.weapon-icon-wrapper {
+    font-size: 4rem;
+    color: var(--text-gray);
+    position: relative;
+    z-index: 2;
+    transition: transform var(--transition), color var(--transition);
+}
+
+.weapon-card:hover .weapon-icon-wrapper {
+    transform: scale(1.1) rotate(-5deg);
+    color: var(--primary);
+}
+
+.weapon-particles {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(247, 147, 30, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.weapon-card:hover .weapon-particles {
+    opacity: 1;
+}
+
+.weapon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.weapon-name {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+}
+
+.weapon-type {
+    font-size: 0.7rem;
+    color: var(--primary);
+    letter-spacing: 1px;
+}
+
+.weapon-desc {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.weapon-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.weapon-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.weapon-stat .stat-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+}
+
+.weapon-stat .stat-name {
+    color: var(--text-gray);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.weapon-stat .stat-name i {
+    color: var(--primary);
+    font-size: 0.65rem;
+}
+
+.weapon-stat .stat-value {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.stat-bar-container {
+    position: relative;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-bar-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.stat-bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--width);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.stat-bar-fill.damage { background: linear-gradient(90deg, var(--red), #f97316); }
+.stat-bar-fill.rate { background: linear-gradient(90deg, var(--yellow), var(--primary)); }
+.stat-bar-fill.range { background: linear-gradient(90deg, var(--green), #4ade80); }
+.stat-bar-fill.stability { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+.weapon-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 0.75rem;
+    color: var(--text-gray);
+}
+
+.weapon-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.weapon-meta i {
+    color: var(--primary);
+    font-size: 0.6rem;
+}
+
+.ammo-type.mythic {
+    color: var(--red);
+}
+
+.ammo-type.mythic i {
+    color: var(--red);
+}
+
+.weapon-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    box-shadow: inset 0 0 30px rgba(247, 147, 30, 0);
+    transition: box-shadow var(--transition);
+    pointer-events: none;
+}
+
+.weapon-card:hover .weapon-glow {
+    box-shadow: inset 0 0 30px rgba(247, 147, 30, 0.1);
+}
+
+.weapon-glow.mythic {
+    box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.1);
+}
+
+/* ============================================
+   9. OPERATORS SECTION
+   ============================================ */
+
+.operators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.operator-card {
+    position: relative;
+    background: var(--bg-card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all var(--transition);
+}
+
+.operator-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.operator-bg {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.operator-image {
+    width: 100%;
+    height: 100%;
+}
+
+.operator-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.operator-card:hover .operator-image img {
+    transform: scale(1.1);
+}
+
+.operator-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, var(--bg-card) 0%, rgba(17, 17, 17, 0.5) 50%, transparent 100%);
+}
+
+.operator-role {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    font-family: var(--font-accent);
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+}
+
+.operator-role.sniper { color: var(--primary); border: 1px solid var(--primary); }
+.operator-role.assault { color: var(--red); border: 1px solid var(--red); }
+.operator-role.support { color: var(--green); border: 1px solid var(--green); }
+.operator-role.recon { color: var(--blue); border: 1px solid var(--blue); }
+
+.operator-content {
+    padding: 25px;
+}
+
+.operator-name {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    letter-spacing: 3px;
+    margin-bottom: 5px;
+}
+
+.operator-specialty {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+}
+
+.operator-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.op-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.op-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-gray);
+    width: 70px;
+}
+
+.op-stat-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.op-stat-fill {
+    height: 100%;
+    width: var(--width);
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    border-radius: 3px;
+    transition: width 1s ease;
+}
+
+.op-stat-fill.assault { background: linear-gradient(90deg, var(--red), #f97316); }
+.op-stat-fill.support { background: linear-gradient(90deg, var(--green), #4ade80); }
+.op-stat-fill.recon { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+
+.op-stat-value {
+    font-family: var(--font-accent);
+    font-size: 0.75rem;
+    color: var(--primary);
+    width: 30px;
+    text-align: right;
+}
+
+.operator-loadout {
+    display: flex;
+    gap: 10px;
+}
+
+.operator-loadout span {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    transition: all var(--transition);
+}
+
+.operator-loadout span:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg-dark);
+    transform: scale(1.1);
+}
+
+.operator-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    transition: border-color var(--transition);
+    pointer-events: none;
+}
+
+.operator-card:hover .operator-frame {
+    border-color: var(--primary);
+}
+
+/* ============================================
+   10. GAME MODES SECTION
+   ============================================ */
+
+.modes-section {
+    background: var(--bg-dark);
+}
+
+.modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.mode-card {
+    position: relative;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.6), rgba(20, 20, 20, 0.8));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    overflow: hidden;
+    transition: all var(--transition);
+}
+
+.mode-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary);
+}
+
+.mode-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--primary);
+    border-radius: 20px;
+    z-index: 2;
+}
+
+.mode-icon-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 20px;
+    opacity: 0.2;
+    transition: opacity var(--transition);
+}
+
+.mode-card:hover .mode-icon-bg {
+    opacity: 0.4;
+}
+
+.mode-icon.ranked { color: var(--purple); }
+.mode-icon.ranked .mode-icon-bg { background: linear-gradient(135deg, var(--purple), #7c3aed); }
+
+.mode-icon.arcade { color: var(--cyan); }
+.mode-icon.arcade .mode-icon-bg { background: linear-gradient(135deg, var(--cyan), #0891b2); }
+
+.mode-icon.tdm { color: var(--red); }
+.mode-icon.tdm .mode-icon-bg { background: linear-gradient(135deg, var(--red), #dc2626); }
+
+.mode-name {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.mode-desc {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.mode-details {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 0.8rem;
+    color: var(--text-gray);
+}
+
+.mode-details span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.mode-details i {
+    color: var(--primary);
+}
+
+.mode-hover-effect {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(247, 147, 30, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.mode-card:hover .mode-hover-effect {
+    opacity: 1;
+}
+
+/* ============================================
+   11. GALLERY SECTION
+   ============================================ */
+
+.gallery-section {
+    background: var(--bg-darker);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    gap: 15px;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.gallery-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-item.tall {
+    grid-row: span 2;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay i {
+    font-size: 2rem;
+    color: var(--primary);
+    transform: scale(0);
+    transition: transform var(--transition-bounce);
+}
+
+.gallery-item:hover .gallery-overlay i {
+    transform: scale(1);
+}
+
+.gallery-overlay span {
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    color: var(--text-white);
+    letter-spacing: 1px;
+}
+
+/* ============================================
+   12. CTA SECTION
+   ============================================ */
+
+.cta-section {
+    position: relative;
+    padding: 120px 0;
+    overflow: hidden;
+}
+
+.cta-bg {
+    position: absolute;
+    inset: 0;
+    background: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=1920') center/cover no-repeat;
+}
+
+.cta-particles {
+    position: absolute;
+    inset: 0;
+}
+
+.cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7));
+}
+
+.cta-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.cta-title {
+    font-family: var(--font-heading);
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    display: inline-block;
+    color: var(--primary);
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    color: var(--cyan);
+    animation: glitch-1 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+}
+
+.glitch::after {
+    color: var(--red);
+    animation: glitch-2 0.3s infinite linear alternate-reverse;
+    clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+    0% { transform: translateX(-2px); }
+    100% { transform: translateX(2px); }
+}
+
+@keyframes glitch-2 {
+    0% { transform: translateX(2px); }
+    100% { transform: translateX(-2px); }
+}
+
+.cta-desc {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 40px;
+}
+
+.cta-buttons {
+    margin-bottom: 40px;
+}
+
+.btn-large {
+    padding: 20px 50px;
+}
+
+.btn-large .btn-content {
+    font-size: 1rem;
+}
+
+.platform-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.platform-icons i {
+    font-size: 2rem;
+    color: var(--text-gray);
+    transition: all var(--transition);
+}
+
+.platform-icons i:hover {
+    color: var(--text-white);
+    transform: scale(1.2);
+}
+
+/* ============================================
+   13. FOOTER
+   ============================================ */
+
+.footer {
+    background: var(--bg-darker);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-top {
+    padding: 60px 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px;
+}
+
+.footer-logo .logo-box {
+    margin-bottom: 20px;
+}
+
+.footer-logo .logo-text {
+    font-family: var(--font-accent);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.footer-desc {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+
+.social-btn {
+    width: 45px;
+    height: 45px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    font-size: 1rem;
+    transition: all var(--transition);
+}
+
+.social-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+}
+
+.footer-links h4 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.footer-links ul {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-links a {
+    font-size: 0.9rem;
+    color: var(--text-gray);
+    transition: color var(--transition);
+    position: relative;
+}
+
+.footer-links a::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+}
+
+.footer-links a:hover::before {
+    width: 10px;
+}
+
+.footer-bottom {
+    padding: 20px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.footer-bottom p {
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+/* ============================================
+   14. BACK TO TOP BUTTON
+   ============================================ */
+
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.2rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition);
+    z-index: 100;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+    transform: translateY(-5px);
+}
+
+.progress-ring {
+    position: absolute;
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    stroke-dasharray: 138;
+    stroke-dashoffset: 138;
+    transition: stroke-dashoffset 0.3s ease;
+}
+
+/* ============================================
+   15. LIGHTBOX
+   ============================================ */
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition);
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-image {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    transform: scale(0.9);
+    transition: transform var(--transition);
+}
+
+.lightbox.active .lightbox-image {
+    transform: scale(1);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-white);
+    font-size: 1.2rem;
+    transition: all var(--transition);
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background: var(--primary);
+    color: var(--bg-dark);
+}
+
+.lightbox-close { top: 20px; right: 20px; }
+.lightbox-prev { left: 20px; top: 50%; transform: translateY(-50%); }
+.lightbox-next { right: 20px; top: 50%; transform: translateY(-50%); }
+
+/* ============================================
+   16. ANIMATIONS
+   ============================================ */
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.animate-on-scroll.animated {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   17. RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1200px) {
+    .maps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .map-card.featured {
+        grid-column: span 2;
+        grid-row: span 1;
+    }
+    
+    .map-card.featured .map-image {
+        height: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    :root {
+        --section-padding: 80px;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transform: translateX(100%);
+        transition: transform var(--transition);
+    }
+    
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .nav-actions {
+        display: none;
+    }
+    
+    .hero-side-left,
+    .hero-side-right {
+        display: none;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .footer-brand {
+        grid-column: span 2;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        cursor: auto;
+    }
+    
+    .cursor-dot,
+    .cursor-outline {
+        display: none;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .stat-divider {
+        width: 50px;
+        height: 1px;
+    }
+    
+    .maps-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-card.featured {
+        grid-column: 1;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 250px;
+    }
+    
+    .gallery-item.large,
+    .gallery-item.tall {
+        grid-column: 1;
+        grid-row: span 1;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-brand {
+        grid-column: 1;
+    }
+    
+    .footer-social {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --section-padding: 60px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .weapon-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .weapon-tab {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .section-title {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .title-decoration {
+        display: none;
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+</style>
+
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <span class="logo-letter" data-letter="P">P</span>
+                <span class="logo-letter" data-letter="U">U</span>
+                <span class="logo-letter" data-letter="B">B</span>
+                <span class="logo-letter" data-letter="G">G</span>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <p class="loader-text">ENTERING BATTLEGROUND...</p>
+        </div>
+    </div>
+
+    <!-- Cursor Effect -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <div class="logo-box">
+                    <span class="logo-icon">P</span>
+                    <div class="logo-glitch" data-text="PUBG">PUBG</div>
+                </div>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#hero" class="nav-link active"><span data-text="Home">Home</span></a></li>
+                <li><a href="#maps" class="nav-link"><span data-text="Maps">Maps</span></a></li>
+                <li><a href="#arsenal" class="nav-link"><span data-text="Arsenal">Arsenal</span></a></li>
+                <li><a href="#operators" class="nav-link"><span data-text="Operators">Operators</span></a></li>
+                <li><a href="#modes" class="nav-link"><span data-text="Modes">Modes</span></a></li>
+                <li><a href="#gallery" class="nav-link"><span data-text="Gallery">Gallery</span></a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <a href="#" class="btn-play">
+                    <span class="btn-play-bg"></span>
+                    <span class="btn-play-text"><i class="fas fa-play"></i> PLAY NOW</span>
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <!-- Animated Background -->
+        <div class="hero-bg">
+            <div class="hero-video-overlay"></div>
+            <div class="hero-particles" id="particles"></div>
+            <div class="hero-grid-overlay"></div>
+            <div class="smoke-effect smoke-1"></div>
+            <div class="smoke-effect smoke-2"></div>
+            <div class="smoke-effect smoke-3"></div>
+        </div>
+
+        <!-- Animated Lines -->
+        <div class="hero-lines">
+            <div class="h-line h-line-1"></div>
+            <div class="h-line h-line-2"></div>
+            <div class="v-line v-line-1"></div>
+            <div class="v-line v-line-2"></div>
+        </div>
+
+        <!-- Corner Decorations -->
+        <div class="corner-decor top-left">
+            <svg viewBox="0 0 100 100"><path d="M0,50 L0,0 L50,0" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="corner-decor top-right">
+            <svg viewBox="0 0 100 100"><path d="M50,0 L100,0 L100,50" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="corner-decor bottom-left">
+            <svg viewBox="0 0 100 100"><path d="M0,50 L0,100 L50,100" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <div class="corner-decor bottom-right">
+            <svg viewBox="0 0 100 100"><path d="M50,100 L100,100 L100,50" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="hero-badge animate-on-scroll">
+                <div class="badge-pulse"></div>
+                <span>SEASON 28 • LIVE NOW</span>
+            </div>
+
+            <h1 class="hero-title">
+                <span class="title-line">
+                    <span class="char-animate">D</span>
+                    <span class="char-animate">R</span>
+                    <span class="char-animate">O</span>
+                    <span class="char-animate">P</span>
+                    <span class="char-animate">.</span>
+                </span>
+                <span class="title-line highlight">
+                    <span class="char-animate">L</span>
+                    <span class="char-animate">O</span>
+                    <span class="char-animate">O</span>
+                    <span class="char-animate">T</span>
+                    <span class="char-animate">.</span>
+                </span>
+                <span class="title-line">
+                    <span class="char-animate">SURVIVAL.</span>
+                    <!-- <span class="char-animate">U</span>
+                    <span class="char-animate">R</span>
+                    <span class="char-animate">V</span>
+                    <span class="char-animate">I</span>
+                    <span class="char-animate">V</span>
+                    <span class="char-animate">E</span>
+                    <span class="char-animate">.</span> -->
+                </span>
+            </h1>
+
+            <p class="hero-description animate-on-scroll">
+                100 players. One winner. Drop into intense battlegrounds, 
+                scavenge for weapons, and fight to be the last one standing.
+            </p>
+
+            <div class="hero-buttons animate-on-scroll">
+                <a href="#" class="btn btn-primary">
+                    <span class="btn-bg"></span>
+                    <span class="btn-content">
+                        <i class="fas fa-crosshairs"></i>
+                        <span>ENTER BATTLE</span>
+                    </span>
+                    <span class="btn-glare"></span>
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <span class="btn-border"></span>
+                    <span class="btn-content">
+                        <i class="fas fa-play-circle"></i>
+                        <span>WATCH TRAILER</span>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Animated Stats -->
+            <div class="hero-stats animate-on-scroll">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="500">0</span>
+                        <span class="stat-suffix">M+</span>
+                        <span class="stat-label">Active Players</span>
+                    </div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="8">0</span>
+                        <span class="stat-suffix"></span>
+                        <span class="stat-label">Battle Maps</span>
+                    </div>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-suffix">M+</span>
+                        <span class="stat-label">Matches Daily</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>SCROLL DOWN</span>
+            <div class="scroll-arrows">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Side Elements -->
+        <div class="hero-side-left">
+            <div class="side-line"></div>
+            <span>BATTLEGROUNDS</span>
+            <div class="side-line"></div>
+        </div>
+        <div class="hero-side-right">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-twitch"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maps Section -->
+    <section id="maps" class="section maps-section">
+        <div class="section-bg">
+            <div class="bg-gradient"></div>
+            <div class="bg-pattern"></div>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">
+                    <i class="fas fa-map-marked-alt"></i>
+                    BATTLEGROUNDS
+                </span>
+                <h2 class="section-title animate-on-scroll">
+                    <span class="title-decoration left"></span>
+                    CHOOSE YOUR <span class="highlight">WARZONE</span>
+                    <span class="title-decoration right"></span>
+                </h2>
+                <p class="section-desc animate-on-scroll">
+                    Each battlefield offers unique terrain, weather, and tactical challenges.
+                </p>
+            </div>
+
+            <div class="maps-grid">
+                <!-- Erangel -->
+                <div class="map-card featured animate-on-scroll" data-map="erangel">
+                    <div class="map-image">
+                        <img src="eragenl.jpg" alt="Erangel">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge">CLASSIC</div>
+                        <h3 class="map-name">ERANGEL</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 8x8 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">The original battleground. An abandoned Russian island with military bases, cities, and open fields.</p>
+                        <div class="map-stats">
+                            <div class="map-stat">
+                                <span class="stat-name">Difficulty</span>
+                                <div class="stat-bar"><div class="stat-fill" style="--width: 70%"></div></div>
+                            </div>
+                            <div class="map-stat">
+                                <span class="stat-name">Loot Density</span>
+                                <div class="stat-bar"><div class="stat-fill" style="--width: 65%"></div></div>
+                            </div>
+                        </div>
+                        <button class="map-btn">
+                            <span>EXPLORE MAP</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="map-glow"></div>
+                </div>
+
+                <!-- Miramar -->
+                <div class="map-card animate-on-scroll" data-map="miramar">
+                    <div class="map-image">
+                        <img src="download (1).jpg" alt="Miramar">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge desert">DESERT</div>
+                        <h3 class="map-name">DEPSTICS DESERT</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 8x8 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">Vast desert landscape with urban sprawl and long-range combat opportunities.</p>
+                        <button class="map-btn">
+                            <span>EXPLORE</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+<div class="map-card animate-on-scroll" data-map="miramar">
+                    <div class="map-image">
+                        <img src="sanhok.jpg" alt="Miramar">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge desert">JUNGLE</div>
+                        <h3 class="map-name">SANHOK</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 4x4 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">Vast desert landscape with urban sprawl and long-range combat opportunities.</p>
+                        <button class="map-btn">
+                            <span>EXPLORE</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+
+                <!-- Sanhok -->
+                <div class="map-card animate-on-scroll" data-map="sanhok">
+                    <div class="map-image">
+                        <img src="download (2).jpg" alt="Sanhok">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge jungle">CLASSIC</div>
+                        <h3 class="map-name">METRO ROYALE</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 8x8 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">Dense tropical jungle for fast-paced, intense close-quarters combat.</p>
+                        <button class="map-btn">
+                            <span>EXPLORE</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Vikendi -->
+                <div class="map-card animate-on-scroll" data-map="vikendi">
+                    <div class="map-image">
+                        <img src="New Version 3_4.jpg" alt="Vikendi">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge snow">ARENA</div>
+                        <h3 class="map-name">CRIMSON ECLIPES AREANA</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 6x6 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">Frozen wilderness where footprints betray your position in the snow.</p>
+                        <button class="map-btn">
+                            <span>EXPLORE</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Taego -->
+                <div class="map-card animate-on-scroll" data-map="taego">
+                    <div class="map-image">
+                        <img src="pubg (1).jpg" alt="Taego">
+                        <div class="map-overlay"></div>
+                        <div class="map-scan-line"></div>
+                    </div>
+                    <div class="map-content">
+                        <div class="map-badge new">DESERT</div>
+                        <h3 class="map-name">BLUE ARENA</h3>
+                        <div class="map-specs">
+                            <span><i class="fas fa-expand-arrows-alt"></i> 8x8 km</span>
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                        </div>
+                        <p class="map-desc">Korean-inspired battleground with Self-AED and Comeback BR mechanics.</p>
+                        <button class="map-btn">
+                            <span>EXPLORE</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arsenal Section -->
+    <section id="arsenal" class="section arsenal-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">
+                    <i class="fas fa-crosshairs"></i>
+                    ARMORY
+                </span>
+                <h2 class="section-title animate-on-scroll">
+                    <span class="title-decoration left"></span>
+                    WEAPONS <span class="highlight">ARSENAL</span>
+                    <span class="title-decoration right"></span>
+                </h2>
+                <p class="section-desc animate-on-scroll">
+                    Master your weapons. Know their strengths. Dominate the battlefield.
+                </p>
+            </div>
+
+            <!-- Weapon Category Tabs -->
+           
+
+            <!-- Weapon Display Area -->
+            <div class="weapon-showcase animate-on-scroll">
+                <!-- Weapon Preview Panel -->
+      
+                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="au 1.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">M416</h3>
+                            <p class="preview-type" id="previewType">ASSAULT RIFLE</p>
+                            <p class="preview-desc" id="previewDesc">The most versatile assault rifle in PUBG. Exceptional attachment compatibility makes it deadly at any range..</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 65%"></div></div>
+                                    <span class="stat-val">41</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 75%"></div></div>
+                                    <span class="stat-val">75</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 68%"></div></div>
+                                    <span class="stat-val">68</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 82%"></div></div>
+                                    <span class="stat-val">82</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 30 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="au 3.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">SCAR-L</h3>
+                            <p class="preview-type" id="previewType">ASSAULT RIFLE</p>
+                            <p class="preview-desc" id="previewDesc">Balanced assault rifle with manageable recoil. Great for beginners and reliable in all situations.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 41%"></div></div>
+                                    <span class="stat-val">41</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 68%"></div></div>
+                                    <span class="stat-val">68</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 65%"></div></div>
+                                    <span class="stat-val">65</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 75%"></div></div>
+                                    <span class="stat-val">75</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 30 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+             
+
+<!-- SNIPER -->
+
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sp 1.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">AWM</h3>
+                            <p class="preview-type" id="previewType">SNIPER RIFLE</p>
+                            <p class="preview-desc" id="previewDesc">The most powerful sniper rifle. One-shot headshot potential through any helmet. Crate exclusive</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 120%"></div></div>
+                                    <span class="stat-val">120</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 20%"></div></div>
+                                    <span class="stat-val">20</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 100%"></div></div>
+                                    <span class="stat-val">100</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 45%"></div></div>
+                                    <span class="stat-val">45</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 300 Magnum</span>
+                                <span><i class="fas fa-layer-group"></i> 5 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sp 2.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">M24</h3>
+                            <p class="preview-type" id="previewType">SNIPER RIFLE</p>
+                            <p class="preview-desc" id="previewDesc">Military-grade bolt-action sniper. Higher damage than Kar98k with faster bullet velocity.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 84%"></div></div>
+                                    <span class="stat-val">84</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 28%"></div></div>
+                                    <span class="stat-val">28</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 92%"></div></div>
+                                    <span class="stat-val">92</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 55%"></div></div>
+                                    <span class="stat-val">55</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 7.62mm</span>
+                                <span><i class="fas fa-layer-group"></i> 5 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+
+<!-- SMGs -->
+                
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sm 3.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">UMP45</h3>
+                            <p class="preview-type" id="previewType">SMG Rifles</p>
+                            <p class="preview-desc" id="previewDesc">The most versatile SMG in PUBG. Exceptional attachment compatibility makes it deadly at any range.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 41%"></div></div>
+                                    <span class="stat-val">41</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 40%"></div></div>
+                                    <span class="stat-val">40</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 70%"></div></div>
+                                    <span class="stat-val">70</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 82%"></div></div>
+                                    <span class="stat-val">82</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 35 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sm2.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">Vector</h3>
+                            <p class="preview-type" id="previewType">SMG RIFLE</p>
+                            <p class="preview-desc" id="previewDesc">The most versatile SMG rifle in PUBG. Exceptional attachment compatibility makes it deadly at any range.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 59%"></div></div>
+                                    <span class="stat-val">59</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 40%"></div></div>
+                                    <span class="stat-val">40</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 68%"></div></div>
+                                    <span class="stat-val">68</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 90%"></div></div>
+                                    <span class="stat-val">90</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 30 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+<!-- SHOTGUNS -->
+
+
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sh 3.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName">S686</h3>
+                            <p class="preview-type" id="previewType">SHOTGUN</p>
+                            <p class="preview-desc" id="previewDesc">The most versatile shotgun in PUBG. Exceptional attachment compatibility makes it deadly at any range.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 95%"></div></div>
+                                    <span class="stat-val">95</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 20%"></div></div>
+                                    <span class="stat-val">20</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 31%"></div></div>
+                                    <span class="stat-val">31</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 45%"></div></div>
+                                    <span class="stat-val">45</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 2 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+
+                                <div class="weapon-preview" id="weaponPreview">
+                    <div class="preview-bg">
+                        <div class="preview-grid"><img src="sh 4.jpeg" alt=""></div>
+                        <div class="preview-glow"></div>
+                    </div>
+                    <div class="preview-content">
+                        <div class="preview-image" id="previewImage">
+                            
+                            <div class="preview-scan-line"></div>
+                        </div>
+                        <div class="preview-info" id="previewInfo">
+                            <div class="preview-badge" id="previewBadge">LEGENDARY</div>
+                            <h3 class="preview-name" id="previewName"> S1897</h3>
+                            <p class="preview-type" id="previewType">SHOTGUN</p>
+                            <p class="preview-desc" id="previewDesc">The most versatile shotgun in PUBG. Exceptional attachment compatibility makes it deadly at any range.</p>
+                            <div class="preview-stats" id="previewStats">
+                                <div class="preview-stat">
+                                    <span class="stat-label">DAMAGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview damage" style="width: 95%"></div></div>
+                                    <span class="stat-val">93</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">FIRE RATE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview rate" style="width: 75%"></div></div>
+                                    <span class="stat-val">75</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">RANGE</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview range" style="width: 46%"></div></div>
+                                    <span class="stat-val">46</span>
+                                </div>
+                                <div class="preview-stat">
+                                    <span class="stat-label">STABILITY</span>
+                                    <div class="stat-bar-preview"><div class="stat-fill-preview stability" style="width: 70%"></div></div>
+                                    <span class="stat-val">70</span>
+                                </div>
+                            </div>
+                            <div class="preview-meta">
+                                <span><i class="fas fa-circle"></i> 5.56mm</span>
+                                <span><i class="fas fa-layer-group"></i> 5 Rounds</span>
+                                <span><i class="fas fa-clock"></i> 0.086s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-corner tl"></div>
+                    <div class="preview-corner tr"></div>
+                    <div class="preview-corner bl"></div>
+                    <div class="preview-corner br"></div>
+                </div>
+
+
+
+
+
+
+
+
+
+    </section>
+
+    <!-- Operators Section -->
+    <section id="operators" class="section operators-section">
+        <div class="section-bg">
+            <div class="bg-gradient"></div>
+        </div>
+
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">
+                    <i class="fas fa-user-shield"></i>
+                    ELITE SQUAD
+                </span>
+                <h2 class="section-title animate-on-scroll">
+                    <span class="title-decoration left"></span>
+                    COMBAT <span class="highlight">OPERATORS</span>
+                    <span class="title-decoration right"></span>
+                </h2>
+                <p class="section-desc animate-on-scroll">
+                    Choose your role. Master your skills. Lead your squad to victory.
+                </p>
+            </div>
+
+            <div class="operators-grid">
+                <!-- Operator 1 - Sniper -->
+                <div class="operator-card animate-on-scroll">
+                    <div class="operator-bg">
+                        <div class="operator-image">
+                            <img src="co 1.jpg"alt="Ghost">
+                        </div>
+                        <div class="operator-overlay"></div>
+                    </div>
+                    <div class="operator-role sniper">
+                        <i class="fas fa-crosshairs"></i>
+                        <span>SNIPER</span>
+                    </div>
+                    <div class="operator-content">
+                        <h3 class="operator-name">GHOST</h3>
+                        <p class="operator-specialty">Long-Range Eliminator</p>
+                        <div class="operator-stats">
+                            <div class="op-stat">
+                                <span class="op-stat-label">Accuracy</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill" style="--width: 98%"></div>
+                                </div>
+                                <span class="op-stat-value">98</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Stealth</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill" style="--width: 95%"></div>
+                                </div>
+                                <span class="op-stat-value">95</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Patience</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill" style="--width: 90%"></div>
+                                </div>
+                                <span class="op-stat-value">90</span>
+                            </div>
+                        </div>
+                        <div class="operator-loadout">
+                            <span title="AWM"><i class="fas fa-bullseye"></i></span>
+                            <span title="Ghillie Suit"><i class="fas fa-vest"></i></span>
+                            <span title="8x Scope"><i class="fas fa-binoculars"></i></span>
+                        </div>
+                    </div>
+                    <div class="operator-frame"></div>
+                </div>
+
+                <!-- Operator 2 - Assault -->
+                <div class="operator-card animate-on-scroll">
+                    <div class="operator-bg">
+                        <div class="operator-image">
+                            <img src="co 2.jpg" alt="Viper">
+                        </div>
+                        <div class="operator-overlay"></div>
+                    </div>
+                    <div class="operator-role assault">
+                        <i class="fas fa-fire"></i>
+                        <span>ASSAULT</span>
+                    </div>
+                    <div class="operator-content">
+                        <h3 class="operator-name">VIPER</h3>
+                        <p class="operator-specialty">Frontline Warrior</p>
+                        <div class="operator-stats">
+                            <div class="op-stat">
+                                <span class="op-stat-label">Firepower</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill assault" style="--width: 95%"></div>
+                                </div>
+                                <span class="op-stat-value">95</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Aggression</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill assault" style="--width: 92%"></div>
+                                </div>
+                                <span class="op-stat-value">92</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Reflexes</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill assault" style="--width: 88%"></div>
+                                </div>
+                                <span class="op-stat-value">88</span>
+                            </div>
+                        </div>
+                        <div class="operator-loadout">
+                            <span title="M416"><i class="fas fa-gun"></i></span>
+                            <span title="Level 3 Vest"><i class="fas fa-shield-halved"></i></span>
+                            <span title="Grenades"><i class="fas fa-bomb"></i></span>
+                        </div>
+                    </div>
+                    <div class="operator-frame"></div>
+                </div>
+
+                <!-- Operator 3 - Support -->
+                <div class="operator-card animate-on-scroll">
+                    <div class="operator-bg">
+                        <div class="operator-image">
+                            <img src="co 3.jpg" alt="Doc">
+                        </div>
+                        <div class="operator-overlay"></div>
+                    </div>
+                    <div class="operator-role support">
+                        <i class="fas fa-medkit"></i>
+                        <span>SUPPORT</span>
+                    </div>
+                    <div class="operator-content">
+                        <h3 class="operator-name">DOC</h3>
+                        <p class="operator-specialty">Combat Medic</p>
+                        <div class="operator-stats">
+                            <div class="op-stat">
+                                <span class="op-stat-label">Healing</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill support" style="--width: 100%"></div>
+                                </div>
+                                <span class="op-stat-value">100</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Teamwork</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill support" style="--width: 96%"></div>
+                                </div>
+                                <span class="op-stat-value">96</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Awareness</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill support" style="--width: 85%"></div>
+                                </div>
+                                <span class="op-stat-value">85</span>
+                            </div>
+                        </div>
+                        <div class="operator-loadout">
+                            <span title="Med Kit"><i class="fas fa-suitcase-medical"></i></span>
+                            <span title="First Aid"><i class="fas fa-heart"></i></span>
+                            <span title="Smoke Grenades"><i class="fas fa-cloud"></i></span>
+                        </div>
+                    </div>
+                    <div class="operator-frame"></div>
+                </div>
+
+                <!-- Operator 4 - Recon -->
+                <div class="operator-card animate-on-scroll">
+                    <div class="operator-bg">
+                        <div class="operator-image">
+                            <img src="co 4.jpg" alt="Shadow">
+                        </div>
+                        <div class="operator-overlay"></div>
+                    </div>
+                    <div class="operator-role recon">
+                        <i class="fas fa-satellite-dish"></i>
+                        <span>RECON</span>
+                    </div>
+                    <div class="operator-content">
+                        <h3 class="operator-name">SHADOW</h3>
+                        <p class="operator-specialty">Intel Specialist</p>
+                        <div class="operator-stats">
+                            <div class="op-stat">
+                                <span class="op-stat-label">Scouting</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill recon" style="--width: 97%"></div>
+                                </div>
+                                <span class="op-stat-value">97</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Mobility</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill recon" style="--width: 94%"></div>
+                                </div>
+                                <span class="op-stat-value">94</span>
+                            </div>
+                            <div class="op-stat">
+                                <span class="op-stat-label">Survival</span>
+                                <div class="op-stat-bar">
+                                    <div class="op-stat-fill recon" style="--width: 89%"></div>
+                                </div>
+                                <span class="op-stat-value">89</span>
+                            </div>
+                        </div>
+                        <div class="operator-loadout">
+                            <span title="Drone"><i class="fas fa-helicopter"></i></span>
+                            <span title="Tactical Map"><i class="fas fa-map"></i></span>
+                            <span title="Radio"><i class="fas fa-walkie-talkie"></i></span>
+                        </div>
+                    </div>
+                    <div class="operator-frame"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Modes Section -->
+    <section id="modes" class="section modes-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">
+                    <i class="fas fa-gamepad"></i>
+                    GAME MODES
+                </span>
+                <h2 class="section-title animate-on-scroll">
+                    <span class="title-decoration left"></span>
+                    CHOOSE YOUR <span class="highlight">BATTLE</span>
+                    <span class="title-decoration right"></span>
+                </h2>
+            </div>
+
+            <div class="modes-grid">
+                <!-- Classic Mode -->
+                <div class="mode-card animate-on-scroll">
+                    <div class="mode-icon">
+                        <div class="mode-icon-bg"></div>
+                        <i class="fas fa-parachute-box"></i>
+                    </div>
+                    <div class="mode-content">
+                        <h3 class="mode-name">CLASSIC</h3>
+                        <p class="mode-desc">The original battle royale experience. 100 players, one winner.</p>
+                        <div class="mode-details">
+                            <span><i class="fas fa-users"></i> 100 Players</span>
+                            <span><i class="fas fa-clock"></i> 30-35 min</span>
+                        </div>
+                    </div>
+                    <div class="mode-hover-effect"></div>
+                </div>
+
+                <!-- Ranked Mode -->
+                <div class="mode-card animate-on-scroll">
+                    <div class="mode-icon ranked">
+                        <div class="mode-icon-bg"></div>
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="mode-content">
+                        <h3 class="mode-name">RANKED</h3>
+                        <p class="mode-desc">Competitive mode with skill-based matchmaking and tier progression.</p>
+                        <div class="mode-details">
+                            <span><i class="fas fa-medal"></i> Tier System</span>
+                            <span><i class="fas fa-chart-line"></i> Rank Points</span>
+                        </div>
+                    </div>
+                    <div class="mode-hover-effect"></div>
+                </div>
+
+                <!-- Arcade Mode -->
+                <div class="mode-card animate-on-scroll">
+                    <div class="mode-icon arcade">
+                        <div class="mode-icon-bg"></div>
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="mode-content">
+                        <h3 class="mode-name">ARCADE</h3>
+                        <p class="mode-desc">Fast-paced matches with special rules and smaller zones.</p>
+                        <div class="mode-details">
+                            <span><i class="fas fa-fighter-jet"></i> Quick Match</span>
+                            <span><i class="fas fa-clock"></i> 8-15 min</span>
+                        </div>
+                    </div>
+                    <div class="mode-hover-effect"></div>
+                </div>
+
+                <!-- TDM Mode -->
+                <div class="mode-card animate-on-scroll">
+                    <div class="mode-icon tdm">
+                        <div class="mode-icon-bg"></div>
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <div class="mode-content">
+                        <h3 class="mode-name">TDM</h3>
+                        <p class="mode-desc">8v8 Team Deathmatch with instant respawn. First to 40 kills wins.</p>
+                        <div class="mode-details">
+                            <span><i class="fas fa-users"></i> 8v8</span>
+                            <span><i class="fas fa-rotate-right"></i> Respawn</span>
+                        </div>
+                    </div>
+                    <div class="mode-hover-effect"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag animate-on-scroll">
+                    <i class="fas fa-images"></i>
+                    MEDIA
+                </span>
+                <h2 class="section-title animate-on-scroll">
+                    <span class="title-decoration left"></span>
+                    BATTLE <span class="highlight">GALLERY</span>
+                    <span class="title-decoration right"></span>
+                </h2>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item large animate-on-scroll">
+                    <img src="download (4).jpg" alt="Battle Scene">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Epic Battle</span>
+                    </div>
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="ga 2.jpg" alt="Squad">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>battleground</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item animate-on-scroll">
+                    <img src="ga 3.jpg" alt="Victory">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Hot Drop</span>
+                    </div>
+                </div>
+
+
+
+                <div class="gallery-item animate-on-scroll">
+                    <img src="heli crash.jpg" alt="Victory">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Game ON</span>
+                    </div>
+                </div>
+                <div class="gallery-item tall animate-on-scroll">
+                    <img src="Pubg Mobile Lite.jpg" alt="Parachute Drop">m
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Victory Royale</span>
+                    </div>
+                </div>
+
+
+                <div class="gallery-item animate-on-scroll">
+                    <img src="pub g main.jpg" alt="Victory">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Power Game</span>
+                    </div>
+                </div>
+
+
+
+                <div class="gallery-item animate-on-scroll">
+                    <img src="ga 4.jpg" alt="Sniper">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Squad Battle</span>
+                    </div>
+                </div>
+                <div class="gallery-item animate-on-scroll">
+                    <img src="ride.jpg" alt="Vehicle">
+                    <div class="gallery-overlay">
+                        <i class="fas fa-expand"></i>
+                        <span>Ride or Die</span>
+                    </div>
+
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-bg">
+            <div class="cta-particles" id="ctaParticles"></div>
+            <div class="cta-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content animate-on-scroll">
+                <h2 class="cta-title">
+                    READY FOR <span class="glitch" data-text="BATTLE?">BATTLE?</span>
+                </h2>
+                <p class="cta-desc">Join millions of players worldwide. Your chicken dinner awaits.</p>
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn-primary btn-large">
+                        <span class="btn-bg"></span>
+                        <span class="btn-content">
+                            <i class="fas fa-download"></i>
+                            <span>DOWNLOAD FREE</span>
+                        </span>
+                        <span class="btn-glare"></span>
+                    </a>
+                </div>
+                <div class="platform-icons">
+                    <i class="fab fa-steam" title="Steam"></i>
+                    <i class="fab fa-playstation" title="PlayStation"></i>
+                    <i class="fab fa-xbox" title="Xbox"></i>
+                    <i class="fab fa-android" title="Android"></i>
+                    <i class="fab fa-apple" title="iOS"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <a href="#" class="footer-logo">
+                            <div class="logo-box">
+                                <span class="logo-icon">P</span>
+                                <div class="logo-text">PUBG</div>
+                            </div>
+                        </a>
+                        <p class="footer-desc">The original battle royale experience. Drop, loot, and fight to be the last one standing.</p>
+                        <div class="footer-social">
+                            <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
+                            <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="social-btn"><i class="fab fa-twitch"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="https://play.google.com/store/apps/details?id=com.tencent.ig&hl=en">Download</a></li>
+                            <li><a href="https://www.pubg.com/en/news?category=patch_notes">Patch Notes</a></li>
+                            <li><a href="https://esports.pubgmobile.com/#/index">Esports</a></li>
+                            <li><a href="https://pubg.com/en/main">Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="https://support.pubg.com/hc/en-us">Help Center</a></li>
+                            <li><a href="https://support.pubg.com/hc/en-us/articles/115004198274-How-do-I-report-bugs">Report Bug</a></li>
+                            <li><a href="https://support.pubg.com/hc/en-us/requests/new">Contact Us</a></li>
+                            <li><a href="https://www.pubgmobile.com/esports/clubopen/faq.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="https://pubg.com/en/clause/term_of_service">Terms of Service</a></li>
+                            <li><a href="https://pubg.com/en/clause/rules_of_conduct/label_steam/latest">Privacy Policy</a></li>
+                            <li><a href="https://www.pubgmobile.com/cookies.html">Cookie Policy</a></li>
+                            <li><a href="https://www.pubgmobile.com/terms/GBR/">EULA</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 PUBG Corporation. All rights reserved. This website made by Ayyan Waqas  website.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+        <svg class="progress-ring" width="50" height="50">
+            <circle class="progress-ring-circle" stroke="#F7931E" stroke-width="3" fill="transparent" r="22" cx="25" cy="25"/>
+        </svg>
+    </button>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close"><i class="fas fa-times"></i></button>
+        <button class="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+        <img src="" alt="Gallery Image" class="lightbox-image">
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
